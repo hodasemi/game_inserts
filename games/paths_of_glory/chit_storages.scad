@@ -1,4 +1,5 @@
-use <../shared/chit_storage.scad>
+use <../../shared/chit_storage.scad>
+use <../../shared/general_storage.scad>
 
 total_width = 123;
 total_height = 293.5;
@@ -256,13 +257,44 @@ module all_chit_storages(height_offset, footprint) {
   }
 }
 
-height_offset = 1;
+// height_offset = 1;
 
-difference() {
-  cube([total_width, total_height, 8]);
-  all_chit_storages(height_offset=height_offset, footprint=true);
-}
+// difference() {
+//   cube([total_width, total_height, 8]);
+//   all_chit_storages(height_offset=height_offset, footprint=true);
+// }
 
-all_chit_storages(height_offset=height_offset, footprint=false);
+// all_chit_storages(height_offset=height_offset, footprint=false);
+
+tolerance = 2;
+
+width = total_width - tolerance;
+height = total_height - tolerance;
+
+chit_tolerance = 1;
+chit_thickness = 2;
+
+small_storage_height = height * 1 / 3;
+
+fill_storage_space(
+  chit_size=small_chit_size,
+  chit_tolerance=chit_tolerance,
+  chit_thickness=chit_thickness,
+  wall_thickness=1.2,
+  front_wall_thickness=1.2,
+  bottom_wall_thickness=1,
+  fill_parameter=[[width, 2], [small_storage_height, 3], [total_thickness, 2]],
+);
+
+translate([0, small_storage_height, 0])
+  fill_storage_space(
+    chit_size=big_chit_size,
+    chit_tolerance=chit_tolerance,
+    chit_thickness=chit_thickness,
+    wall_thickness=1.2,
+    front_wall_thickness=1.2,
+    bottom_wall_thickness=1,
+    fill_parameter=[[width, 2], [height - small_storage_height, 5], [total_thickness, 2]],
+  );
 
 color([0.2, 0.7, 0.2, 0.15]) cube([total_width, total_height, total_thickness]);
