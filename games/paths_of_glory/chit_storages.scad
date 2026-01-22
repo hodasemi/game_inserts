@@ -1,5 +1,6 @@
 use <../../shared/chit_storage.scad>
 use <../../shared/general_storage.scad>
+use <../../shared/filler.scad>
 
 total_width = 123;
 total_height = 293.5;
@@ -296,5 +297,8 @@ translate([0, small_storage_height, 0])
     bottom_wall_thickness=1,
     fill_parameter=[[width, 2], [height - small_storage_height, 5], [total_thickness, 2]],
   );
+
+translate([0, 0, total_thickness])
+  filler(215, 15, 24);
 
 color([0.2, 0.7, 0.2, 0.15]) cube([total_width, total_height, total_thickness]);
