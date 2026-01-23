@@ -1,4 +1,5 @@
 use <../../shared/general_storage.scad>
+use <../../shared/chit_storage.scad>
 use <../../shared/cup.scad>
 
 // objects
@@ -11,6 +12,10 @@ use <../../shared/cup.scad>
 // storage
 // filler
 // spacer
+
+// token_tower
+
+object = "token_tower";
 
 total_box_height = 54;
 
@@ -25,6 +30,7 @@ box_depth = og_box_depth;
 box_height = og_box_height - box_y_tolerance;
 box_width = og_box_width - box_x_tolerance;
 
+nozzle_diameter = 0.6;
 inch = 25.4;
 
 chit_size = inch * 9 / 16;
@@ -103,9 +109,9 @@ if (is_undef(object)) {
       for (z = [0:storage_staple_count - 1]) {
         translate([x * storage_width, y * storage_height, z * storage_depth])
           general_storage(
-            chit_size,
-            chit_tolerance,
-            chit_thickness,
+            chit_size=chit_size,
+            chit_tolerance=chit_tolerance,
+            chit_thickness=chit_thickness,
             width=storage_width,
             height=storage_height,
             depth=storage_depth,
@@ -117,9 +123,9 @@ if (is_undef(object)) {
   }
 } else if (object == "storage") {
   general_storage(
-    chit_size,
-    chit_tolerance,
-    chit_thickness,
+    chit_size=chit_size,
+    chit_tolerance=chit_tolerance,
+    chit_thickness=chit_thickness,
     width=storage_width,
     height=storage_height,
     depth=storage_depth,
@@ -131,9 +137,9 @@ if (is_undef(object)) {
 // if (is_undef(object) || object == "filler")
 //   translate([0, -20, 0])
 //     storage_spacer(
-//       chit_size,
-//       chit_tolerance,
-//       chit_thickness,
+//       chit_size=chit_size,
+//       chit_tolerance=chit_tolerance,
+//       chit_thickness=chit_thickness,
 //       width=storage_width,
 //       height=storage_height,
 //       depth=storage_depth,
@@ -142,3 +148,21 @@ if (is_undef(object)) {
 
 if (is_undef(object) || object == "spacer")
   color("grey") spacer();
+
+wall_thickness = 2 * nozzle_diameter;
+bottom_wall = 1;
+chits = 6;
+
+if (object == "token_tower")
+  chit_storage(
+    width=chit_size + chit_tolerance + 2 * wall_thickness,
+    height=chit_size + chit_tolerance + 2 * wall_thickness,
+    depth=bottom_wall + chits * chit_thickness,
+    wall_thickness=wall_thickness,
+    front_wall_thickness=wall_thickness,
+    columns=1,
+    chit_size=chit_size,
+    chit_tolerance=chit_tolerance,
+    chit_thickness=chit_thickness,
+    chit_count_per_slot=chits
+  );

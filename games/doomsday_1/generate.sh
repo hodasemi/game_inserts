@@ -17,6 +17,8 @@ objects=(
     storage
     filler
     spacer
+
+    token_tower
 )
 
 for i in "${objects[@]}"; do
