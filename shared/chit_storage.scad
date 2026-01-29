@@ -4,6 +4,7 @@ module chit_storage(
   depth = 22,
   wall_thickness = 2,
   front_wall_thickness = 1,
+  front_wall_width = 2,
   columns = 5,
   single_column = true,
   chit_size = 16,
@@ -58,7 +59,7 @@ module chit_storage(
         if (is_undef(diameter)) {
           cube([chit_total_x_size, chit_total_y_size, chit_thickness * chit_count_per_slot + chit_tolerance / 2]);
 
-          radius = (chit_total_x_size - 4) / 2;
+          radius = (chit_total_x_size - 2 * front_wall_width) / 2;
 
           translate([chit_total_x_size / 2, -1, -depth])
             scale([1, 1.25, 1])
@@ -67,7 +68,7 @@ module chit_storage(
           translate([chit_total_diameter / 2, chit_total_diameter / 2, 0])
             cylinder(r=chit_total_diameter / 2, h=chit_thickness * chit_count_per_slot + chit_tolerance / 2, $fn=rounded_ness);
 
-          radius = (chit_total_diameter - 4) / 2;
+          radius = (chit_total_diameter - 2 * front_wall_width) / 2;
 
           translate([chit_total_diameter / 2, -1, -depth])
             scale([1, 1.25, 1])
