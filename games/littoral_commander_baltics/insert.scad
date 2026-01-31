@@ -9,10 +9,10 @@ height = 275;
 depth = 83;
 
 box_wall = 3;
-other_content = 35;
+other_content = 30;
 
 box_width = width - 2 * box_wall;
-box_height = height - 2 * box_wall;
+box_height = height - 2 * box_wall - 2;
 box_depth = depth - other_content;
 
 sleeve_width = 66.5;
@@ -30,12 +30,12 @@ unit_tolerance = 2 * sleeve_tolerance;
 unit_width = unit_card_width + 2 * wall_thickness + unit_tolerance;
 unit_height = unit_card_height + 2 * wall_thickness + unit_tolerance;
 
-extra_cards_width = sleeve_width + 2 * wall_thickness + sleeve_thickness;
-event_card_depth = 15;
+extra_cards_width = sleeve_width + 2 * wall_thickness + sleeve_tolerance;
+event_card_depth = 17;
 
-chit_size = 9 / 16 * inch;
+chit_size = 15;
 chit_tolerance = 1;
-chit_thickness = 2;
+chit_thickness = 2.2;
 
 module upper_right_cards() {
   // upper_right_card_width = 2 * (sleeve_width + sleeve_tolerance) + 3 * wall_thickness;
@@ -138,7 +138,7 @@ module extra_cards() {
 counter_width = box_height - unit_height - extra_cards_width;
 counter_height = 3 * wall_thickness + 2 * (chit_size + chit_tolerance);
 
-module faction_counters() {
+module faction_counters(single) {
   translate([2 * counter_height, extra_cards_width, 0])
     rotate(90, [0, 0, 1])
       fill_storage_space(
@@ -152,7 +152,8 @@ module faction_counters() {
           [2 * counter_height, 2],
           [box_depth, 4],
         ],
-        single_for_printing=false,
+        single_for_printing=single,
+        bottom_wall_thickness=1.5,
       );
 }
 
@@ -193,7 +194,7 @@ translate([box_width / 2, sleeve_width + 2 * wall_thickness + sleeve_thickness, 
   rotate(-90, [0, 0, 1])
     extra_cards();
 
-faction_counters();
+faction_counters(false);
 general_counter(false);
 
 color("green", 0.3) cube([box_width, box_height, box_depth]);
