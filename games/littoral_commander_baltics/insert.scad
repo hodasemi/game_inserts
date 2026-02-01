@@ -1,5 +1,6 @@
 use <../../shared/chit_storage.scad>
 use <../../shared/general_storage.scad>
+use <../../shared/inner_rounded_cube.scad>
 
 // objects
 
@@ -11,6 +12,8 @@ use <../../shared/general_storage.scad>
 
 // faction_counter
 // general_counter
+
+// cube_tray
 
 // object = "soviet_unit_cards";
 
@@ -193,6 +196,25 @@ module general_counter(single) {
   }
 }
 
+module cube_tray(single) {
+  total_counter_width = 2 * counter_height + (2 * wall_thickness + (chit_size + chit_tolerance));
+  width_left = box_width - total_counter_width;
+  height_left = counter_width;
+
+  tray_width = width_left / 2;
+  tray_depth = box_depth / 2;
+
+  translate([total_counter_width, extra_cards_width, 0]) {
+    for (x = [0:1]) {
+      for (z = [0:1]) {
+        if (single && x == 0 && z == 0 || !single)
+          translate([x * tray_width, 0, z * tray_depth])
+            inner_rounded_cube([tray_width, height_left, tray_depth], 7);
+      }
+    }
+  }
+}
+
 if (is_undef(object) || object == "upper_right_cards") {
   upper_right_cards();
 }
@@ -225,6 +247,10 @@ if (is_undef(object) || object == "faction_counter") {
 
 if (is_undef(object) || object == "general_counter") {
   general_counter(!is_undef(object) && object == "general_counter");
+}
+
+if (is_undef(object) || object == "cube_tray") {
+  cube_tray(!is_undef(object) && object == "cube_tray");
 }
 
 if (is_undef(object)) {

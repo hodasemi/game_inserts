@@ -17,6 +17,8 @@ objects=(
 
     faction_counter
     general_counter
+
+    cube_tray
 )
 
 for i in "${objects[@]}"; do
