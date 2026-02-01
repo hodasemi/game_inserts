@@ -31,7 +31,7 @@ unit_width = unit_card_width + 2 * wall_thickness + unit_tolerance;
 unit_height = unit_card_height + 2 * wall_thickness + unit_tolerance;
 
 extra_cards_width = sleeve_width + 2 * wall_thickness + sleeve_tolerance;
-event_card_depth = 17;
+event_card_depth = 18;
 
 chit_size = 15;
 chit_tolerance = 1;
@@ -61,7 +61,7 @@ module upper_right_cards() {
 }
 
 module unit_cards(upper, lower) {
-  thickness = 1;
+  thickness = 0.43;
 
   soviet_depth = box_depth * 3 / 5 - 1.5;
   nato_depth = box_depth * 2 / 5 + 1.5;
@@ -79,7 +79,7 @@ module unit_cards(upper, lower) {
         height=unit_height,
         depth=soviet_depth,
         columns=1,
-        chit_count_per_slot=floor((soviet_depth - 2.0) / thickness),
+        chit_count_per_slot=63,
         front_wall_width=unit_card_width / 4,
       );
 
@@ -95,7 +95,7 @@ module unit_cards(upper, lower) {
           height=unit_height,
           depth=nato_depth,
           columns=1,
-          chit_count_per_slot=floor((nato_depth - 2.5) / thickness),
+          chit_count_per_slot=46,
           front_wall_width=unit_card_width / 4,
         );
   }
