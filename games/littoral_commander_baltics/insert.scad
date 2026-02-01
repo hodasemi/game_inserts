@@ -1,6 +1,19 @@
 use <../../shared/chit_storage.scad>
 use <../../shared/general_storage.scad>
 
+// objects
+
+// upper_right_cards
+// nato_unit_cards
+// soviet_unit_cards
+// event_cards
+// extra_cards
+
+// faction_counter
+// general_counter
+
+// object = "soviet_unit_cards";
+
 inch = 25.4;
 nozzle_diameter = 0.6;
 
@@ -180,21 +193,40 @@ module general_counter(single) {
   }
 }
 
-upper_right_cards();
-unit_cards(true, true);
-event_cards();
+if (is_undef(object) || object == "upper_right_cards") {
+  upper_right_cards();
+}
+
+if (is_undef(object) || object == "nato_unit_cards" || object == "soviet_unit_cards") {
+  unit_cards(is_undef(object) || object == "nato_unit_cards", is_undef(object) || object == "soviet_unit_cards");
+}
+
+if (is_undef(object) || object == "event_cards") {
+  event_cards();
+}
 
 // soviet
-translate([box_width / 2, 0, event_card_depth])
-  rotate(90, [0, 0, 1])
-    extra_cards();
+if (is_undef(object) || object == "extra_cards") {
+  translate([box_width / 2, 0, event_card_depth])
+    rotate(90, [0, 0, 1])
+      extra_cards();
+}
 
 // nato
-translate([box_width / 2, sleeve_width + 2 * wall_thickness + sleeve_thickness, 0])
-  rotate(-90, [0, 0, 1])
-    extra_cards();
+if (is_undef(object)) {
+  translate([box_width / 2, extra_cards_width, 0])
+    rotate(-90, [0, 0, 1])
+      extra_cards();
+}
 
-faction_counters(false);
-general_counter(false);
+if (is_undef(object) || object == "faction_counter") {
+  faction_counters(!is_undef(object) && object == "faction_counter");
+}
 
-color("green", 0.3) cube([box_width, box_height, box_depth]);
+if (is_undef(object) || object == "general_counter") {
+  general_counter(!is_undef(object) && object == "general_counter");
+}
+
+if (is_undef(object)) {
+  color("green", 0.3) cube([box_width, box_height, box_depth]);
+}
