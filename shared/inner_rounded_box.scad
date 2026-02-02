@@ -1,4 +1,4 @@
-module inner_rounded_cube(extents = [30, 30, 30], inner_radius = 3, roundedness = 100, wall_thickness = 1) {
+module inner_rounded_box(extents = [30, 30, 30], inner_radius = 3, wall_thickness = 1, roundedness = 100) {
 
   render() difference() {
       cube(extents);

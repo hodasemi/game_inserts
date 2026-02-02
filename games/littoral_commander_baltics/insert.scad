@@ -1,6 +1,7 @@
 use <../../shared/chit_storage.scad>
 use <../../shared/general_storage.scad>
-use <../../shared/inner_rounded_cube.scad>
+use <../../shared/inner_rounded_box.scad>
+use <../../shared/filler.scad>
 
 // objects
 
@@ -14,6 +15,7 @@ use <../../shared/inner_rounded_cube.scad>
 // general_counter
 
 // cube_tray
+// filler
 
 // object = "soviet_unit_cards";
 
@@ -209,10 +211,18 @@ module cube_tray(single) {
       for (z = [0:1]) {
         if (single && x == 0 && z == 0 || !single)
           translate([x * tray_width, 0, z * tray_depth])
-            inner_rounded_cube([tray_width, height_left, tray_depth], 7);
+            inner_rounded_box([tray_width, height_left, tray_depth], 7, wall_thickness);
       }
     }
   }
+}
+
+module map_filler() {
+  filler_depth = 19;
+  filler_height = 35;
+
+  translate([0, 0, box_depth])
+    filler(width=box_width, height=filler_height, thickness=filler_depth);
 }
 
 if (is_undef(object) || object == "upper_right_cards") {
@@ -251,6 +261,10 @@ if (is_undef(object) || object == "general_counter") {
 
 if (is_undef(object) || object == "cube_tray") {
   cube_tray(!is_undef(object) && object == "cube_tray");
+}
+
+if (is_undef(object) || object == "filler") {
+  map_filler();
 }
 
 if (is_undef(object)) {

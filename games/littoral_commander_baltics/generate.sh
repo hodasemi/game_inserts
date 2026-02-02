@@ -19,6 +19,7 @@ objects=(
     general_counter
 
     cube_tray
+    filler
 )
 
 for i in "${objects[@]}"; do
