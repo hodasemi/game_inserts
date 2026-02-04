@@ -7,7 +7,7 @@ use <../../shared/filler.scad>
 
 // upper_right_cards
 // nato_unit_cards
-// soviet_unit_cards
+// russian_unit_cards
 // event_cards
 // extra_cards
 
@@ -17,7 +17,7 @@ use <../../shared/filler.scad>
 // cube_tray
 // filler
 
-// object = "soviet_unit_cards";
+// object = "russian_unit_cards";
 
 inch = 25.4;
 nozzle_diameter = 0.6;
@@ -229,8 +229,8 @@ if (is_undef(object) || object == "upper_right_cards") {
   upper_right_cards();
 }
 
-if (is_undef(object) || object == "nato_unit_cards" || object == "soviet_unit_cards") {
-  unit_cards(is_undef(object) || object == "nato_unit_cards", is_undef(object) || object == "soviet_unit_cards");
+if (is_undef(object) || object == "nato_unit_cards" || object == "russian_unit_cards") {
+  unit_cards(is_undef(object) || object == "nato_unit_cards", is_undef(object) || object == "russian_unit_cards");
 }
 
 if (is_undef(object) || object == "event_cards") {

@@ -11,7 +11,7 @@ mkdir -p "$dir"
 objects=(
     upper_right_cards
     nato_unit_cards
-    soviet_unit_cards
+    russian_unit_cards
     event_cards
     extra_cards
 
