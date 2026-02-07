@@ -4,7 +4,7 @@ module generate_spacer(
   wall_thickness = 5,
   area_split = [2, 2],
   fill_parameter = [[220, 2], [290, 2], [35, 1]],
-  single_for_rendering = false,
+  single_for_printing = false,
 ) {
   spacer_width = fill_parameter[0][0] / fill_parameter[0][1];
   spacer_height = fill_parameter[1][0] / fill_parameter[1][1];
@@ -13,7 +13,7 @@ module generate_spacer(
   for (x = [0:fill_parameter[0][1] - 1]) {
     for (y = [0:fill_parameter[1][1] - 1]) {
       for (z = [0:fill_parameter[2][1] - 1]) {
-        if (single_for_rendering && x == 0 && y == 0 && z == 0 || !single_for_rendering) {
+        if (single_for_printing && x == 0 && y == 0 && z == 0 || !single_for_printing) {
           translate([x * spacer_width, y * spacer_height, z * spacer_thickness])
             render()
               difference() {

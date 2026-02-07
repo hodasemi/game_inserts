@@ -43,7 +43,8 @@ chit_storage(
 
 translate([0, card_box_height + tolerance, 0])
   generate_spacer(
-    fill_parameter=[[inner_box_width - tolerance, 2], [inner_box_height - card_box_height - tolerance, 2], [inner_box_depth / 2, 1]]
+    fill_parameter=[[inner_box_width - tolerance, 2], [inner_box_height - card_box_height - tolerance, 2], [inner_box_depth / 2, 1]],
+    single_for_printing=false,
   );
 
 translate([0, card_box_height + tolerance, inner_box_depth / 2])
@@ -56,4 +57,5 @@ translate([0, card_box_height + tolerance, inner_box_depth / 2])
     bottom_wall_thickness=1,
     fill_parameter=[[inner_box_width - tolerance, 2], [inner_box_height - card_box_height - tolerance, 4], [inner_box_depth / 2, 2]],
     finger_space_width=13,
+    single_for_printing=false,
   );

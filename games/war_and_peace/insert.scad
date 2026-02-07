@@ -129,7 +129,7 @@ if (is_undef(object) || object == "spacer") {
       [box_inner_height - storage_tolerance, 2],
       [area_thickness / 2, 1],
     ],
-    single_for_rendering=is_undef(object) || object != "spacer" ? false : true
+    single_for_printing=is_undef(object) || object != "spacer" ? false : true
   );
 }
 
