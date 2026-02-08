@@ -2,9 +2,7 @@ use <../../shared/vertical_card_box.scad>
 
 // objects
 
-// fortunes_of_war_cards
-// soviet_cards_totaler_krieg
-// soviet_cards_totaler_krieg
+// first_row_cards
 
 nozzle_size = 0.6;
 
@@ -39,42 +37,21 @@ axis_totaler_krieg_card_count = 100;
 
 card_box_width = sleeve_height + sleeve_tolerance + 4 * wall_thickness;
 
-function card_box_height(count) = count * sleeve_thickness + 8 * wall_thickness;
-
-axis_cards_totaler_krieg_width = card_box_height(axis_totaler_krieg_card_count);
-soviet_cards_totaler_krieg_width = card_box_height(soviet_totaler_krieg_card_count);
-fortunes_of_war_cards_width = card_box_height(fortunes_of_war_card_count);
-
-if (is_undef(object) || object == "axis_cards_totaler_krieg") {
+if (is_undef(object) || object == "first_row_cards") {
   translate([card_box_width, 0, 0])
     rotate(90, [0, 0, 1])
-      vertical_card_box(
-        extents=[axis_cards_totaler_krieg_width, card_box_width, inner_box_depth],
-        corner_radius=2, card_extents=[sleeve_width, sleeve_height],
-        card_count=axis_totaler_krieg_card_count,
+      vertical_card_box_row(
+        row_extents=[inner_box_height, card_box_width, inner_box_depth],
+        inter_box_tolerance=1,
+        corner_radius=3,
+        card_extents=card_extents("common_standard"),
+        card_tolerance=2,
         card_thickness=sleeve_thickness,
-      );
-}
-
-if (is_undef(object) || object == "soviet_cards_totaler_krieg") {
-  translate([card_box_width, axis_cards_totaler_krieg_width + tolerance, 0])
-    rotate(90, [0, 0, 1])
-      vertical_card_box(
-        extents=[soviet_cards_totaler_krieg_width, card_box_width, inner_box_depth],
-        corner_radius=2, card_extents=[sleeve_width, sleeve_height],
-        card_count=soviet_totaler_krieg_card_count,
-        card_thickness=sleeve_thickness,
-      );
-}
-
-if (is_undef(object) || object == "fortunes_of_war_cards") {
-  translate([card_box_width, soviet_cards_totaler_krieg_width + axis_cards_totaler_krieg_width + 2 * tolerance, 0])
-    rotate(90, [0, 0, 1])
-      vertical_card_box(
-        extents=[fortunes_of_war_cards_width, card_box_width, inner_box_depth],
-        corner_radius=2, card_extents=[sleeve_width, sleeve_height],
-        card_count=fortunes_of_war_card_count,
-        card_thickness=sleeve_thickness,
+        card_counts=[
+          fortunes_of_war_card_count,
+          soviet_totaler_krieg_card_count,
+          axis_totaler_krieg_card_count,
+        ]
       );
 }
 
