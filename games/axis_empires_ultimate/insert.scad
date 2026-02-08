@@ -23,8 +23,6 @@ tolerance = 1;
 
 wall_thickness = 2 * nozzle_size;
 
-sleeve_width = 66.5;
-sleeve_height = 92.5;
 sleeve_tolerance = 2;
 sleeve_thickness = 0.66;
 
@@ -35,7 +33,7 @@ fortunes_of_war_card_count = 34;
 soviet_totaler_krieg_card_count = 83;
 axis_totaler_krieg_card_count = 100;
 
-card_box_width = sleeve_height + sleeve_tolerance + 4 * wall_thickness;
+card_box_width = card_extents("common_standard")[1] + sleeve_tolerance + 4 * wall_thickness;
 
 if (is_undef(object) || object == "first_row_cards") {
   translate([card_box_width, 0, 0])
