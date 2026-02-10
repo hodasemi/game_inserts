@@ -6,6 +6,7 @@ use <../../shared/filler.scad>
 // objects
 
 // upper_right_cards
+// upper_left_cards
 // nato_unit_cards
 // russian_unit_cards
 // event_cards
@@ -42,11 +43,12 @@ unit_card_width = 95;
 unit_card_height = 137;
 
 wall_thickness = 2 * nozzle_diameter;
+unit_tolerance = 1.5;
 
-unit_tolerance = 2 * sleeve_tolerance;
-
-unit_width = unit_card_width + 2 * wall_thickness + unit_tolerance;
+unit_width = box_width / 2;
 unit_height = unit_card_height + 2 * wall_thickness + unit_tolerance;
+russia_unit_depth = 31;
+nato_unit_depth = 28;
 
 extra_cards_width = sleeve_width + 2 * wall_thickness + sleeve_tolerance;
 event_card_depth = 18;
@@ -55,65 +57,80 @@ chit_size = 15;
 chit_tolerance = 1;
 chit_thickness = 2.2;
 
-module upper_right_cards() {
+module upper_cards(left, right) {
   // upper_right_card_width = 2 * (sleeve_width + sleeve_tolerance) + 3 * wall_thickness;
   upper_right_card_width = unit_height;
   // upper_right_card_height = sleeve_height + sleeve_tolerance + 2 * wall_thickness;
   upper_right_card_height = box_width - unit_width;
 
-  translate([box_width - upper_right_card_height, box_height, 0])
-    rotate(-90, [0, 0, 1])
-      chit_storage(
-        chit_size=[sleeve_width, sleeve_height],
-        chit_tolerance=sleeve_tolerance,
-        chit_thickness=sleeve_thickness,
-        wall_thickness=wall_thickness,
-        front_wall_thickness=4,
-        width=upper_right_card_width,
-        height=upper_right_card_height,
-        depth=box_depth,
-        columns=2,
-        chit_count_per_slot=floor((box_depth - 2.0) / sleeve_thickness),
-        front_wall_width=sleeve_width / 4,
-      );
+  right_depth = box_depth - nato_unit_depth;
+  left_depth = box_depth - russia_unit_depth;
+
+  if (right)
+    translate([box_width - upper_right_card_height, box_height, nato_unit_depth])
+      rotate(-90, [0, 0, 1])
+        chit_storage(
+          chit_size=[sleeve_width, sleeve_height],
+          chit_tolerance=sleeve_tolerance,
+          chit_thickness=1,
+          wall_thickness=wall_thickness,
+          front_wall_thickness=4,
+          width=upper_right_card_width,
+          height=upper_right_card_height,
+          depth=right_depth,
+          columns=2,
+          chit_count_per_slot=right_depth - 2,
+          front_wall_width=sleeve_width / 4,
+        );
+
+  if (left)
+    translate([0, box_height, russia_unit_depth])
+      rotate(-90, [0, 0, 1])
+        chit_storage(
+          chit_size=[sleeve_width, sleeve_height],
+          chit_tolerance=sleeve_tolerance,
+          chit_thickness=1,
+          wall_thickness=wall_thickness,
+          front_wall_thickness=4,
+          width=upper_right_card_width,
+          height=upper_right_card_height,
+          depth=left_depth,
+          columns=2,
+          chit_count_per_slot=left_depth - 2,
+          front_wall_width=sleeve_width / 4,
+        );
 }
 
-module unit_cards(upper, lower) {
-  thickness = 0.43;
-
-  soviet_depth = box_depth * 3 / 5 - 1.5;
-  nato_depth = box_depth * 2 / 5 + 1.5;
-
+module unit_cards(nato, russia) {
   translate([0, box_height - unit_height, 0]) {
-
-    if (lower)
+    if (russia)
       chit_storage(
         chit_size=[unit_card_width, unit_card_height],
         chit_tolerance=unit_tolerance,
-        chit_thickness=thickness,
+        chit_thickness=1,
         wall_thickness=wall_thickness,
         front_wall_thickness=wall_thickness,
-        width=unit_width,
+        width=box_width / 2,
         height=unit_height,
-        depth=soviet_depth,
+        depth=russia_unit_depth,
         columns=1,
-        chit_count_per_slot=63,
+        chit_count_per_slot=29,
         front_wall_width=unit_card_width / 4,
       );
 
-    if (upper)
-      translate([0, 0, soviet_depth])
+    if (nato)
+      translate([box_width / 2, 0, 0])
         chit_storage(
           chit_size=[unit_card_width, unit_card_height],
           chit_tolerance=unit_tolerance,
-          chit_thickness=thickness,
+          chit_thickness=1,
           wall_thickness=wall_thickness,
           front_wall_thickness=wall_thickness,
-          width=unit_width,
+          width=box_width / 2,
           height=unit_height,
-          depth=nato_depth,
+          depth=nato_unit_depth,
           columns=1,
-          chit_count_per_slot=46,
+          chit_count_per_slot=26,
           front_wall_width=unit_card_width / 4,
         );
   }
@@ -226,7 +243,11 @@ module map_filler() {
 }
 
 if (is_undef(object) || object == "upper_right_cards") {
-  upper_right_cards();
+  upper_cards(false, true);
+}
+
+if (is_undef(object) || object == "upper_left_cards") {
+  upper_cards(true, false);
 }
 
 if (is_undef(object) || object == "nato_unit_cards" || object == "russian_unit_cards") {

@@ -5,7 +5,7 @@ card_thickness = 25;
 
 card_tolerance = 2;
 
-wall_thickness = 3;
+wall_thickness = 2.5;
 
 overlap = 20;
 overlap_tolerance = 0.3;

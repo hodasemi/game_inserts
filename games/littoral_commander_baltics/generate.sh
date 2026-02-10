@@ -10,6 +10,7 @@ mkdir -p "$dir"
 
 objects=(
     upper_right_cards
+    upper_left_cards
     nato_unit_cards
     russian_unit_cards
     event_cards
